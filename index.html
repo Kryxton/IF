@@ -12,20 +12,18 @@
     rel="stylesheet"
   >
   <style>
-    /* Prevent horizontal scrolling to keep the site centered */
-    html, body {
-      overflow-x: hidden;
-    }
-    /* Global reset */
+    /* Global Reset */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    
+    html, body {
+      overflow-x: hidden;
+    }
     body {
       font-family: 'Share Tech Mono', monospace, Arial, sans-serif;
-      /* Warm, soft gradient background */
+      /* Warm, soft radial gradient background */
       background: radial-gradient(circle at top, #f9e6c2, #f7d9b7 70%, #f5c99e 100%);
       color: #3b2e2a;
       font-size: 18px;
@@ -34,7 +32,6 @@
       background-attachment: fixed;
       background-size: cover;
     }
-    
     .container {
       max-width: 700px;
       width: 100%;
@@ -45,25 +42,22 @@
       border-radius: 15px;
       box-shadow: 0 0 20px rgba(211,150,91,0.2);
     }
-    
     h1, p {
       text-align: center;
       margin-bottom: 20px;
     }
-    
-    /* Removed neon glow; kept the class name just for styling */
+    /* Title styling */
     .neon-text {
       color: #3b2e2a;
       font-weight: bold;
     }
-    
     .subheading {
       font-size: 1.2em;
       color: #4e342e;
       margin-top: -10px;
       margin-bottom: 30px;
     }
-    
+    /* Header image */
     .header-image {
       width: 100%;
       border: 1px solid #d3965b;
@@ -77,7 +71,7 @@
       height: auto;
       display: block;
     }
-    
+    /* Socials Section */
     .socials {
       display: flex;
       justify-content: center;
@@ -85,30 +79,27 @@
       gap: 10px;
       margin-bottom: 20px;
     }
-    /* Give the icons a background color matching the dog’s golden-brown hue */
     .socials a {
       display: flex;
       width: 50px;
       height: 50px;
       border: 1px solid #b98548;
       border-radius: 50%;
-      overflow: hidden;
-      background-color: #f2be79; /* dog’s color */
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background-color: #f2be79;
       justify-content: center;
       align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .socials a:hover {
       transform: scale(1.1);
       box-shadow: 0 0 5px rgba(185,133,72,0.4);
     }
-    /* Shrink the icons slightly so the background shows around them */
     .socials img {
       width: 80%;
       height: 80%;
       object-fit: contain;
     }
-    
+    /* Contract Address Section */
     .ca-section {
       margin-bottom: 20px;
       overflow: hidden;
@@ -150,7 +141,6 @@
       color: #fff;
       box-shadow: 0 0 10px rgba(211,150,91,0.4);
     }
-    
     /* Photo Editor Section */
     .photo-editor-section {
       margin-bottom: 20px;
@@ -168,11 +158,11 @@
     .photo-stage {
       position: relative;
       width: 100%;
+      max-width: 600px;
+      margin: 0 auto 15px;
       border: 1px dashed #d3965b;
       border-radius: 10px;
       background-color: #ffe9dc;
-      margin-bottom: 15px;
-      touch-action: none;
       box-shadow: 0 0 10px rgba(211,150,91,0.1);
       min-height: 200px;
       overflow: hidden;
@@ -191,8 +181,11 @@
       user-select: none;
       transition: transform 0.1s ease;
     }
-    
-    /* Draggable Text Element */
+    @media (min-width: 768px) {
+      #dogOverlay {
+        width: 150px;
+      }
+    }
     .draggable-text {
       position: absolute;
       top: 20px;
@@ -212,7 +205,6 @@
       border-color: #b98548;
       box-shadow: 0 0 5px rgba(185,133,72,0.5);
     }
-    
     .slider-container {
       display: flex;
       justify-content: center;
@@ -241,8 +233,6 @@
       color: #fff;
       box-shadow: 0 0 10px rgba(211,150,91,0.4);
     }
-    
-    /* Text Controls Panel */
     #textControls {
       margin-top: 15px;
       padding: 10px;
@@ -252,15 +242,7 @@
       text-align: center;
       display: none;
     }
-    #textControls input[type="text"] {
-      width: 80%;
-      padding: 5px;
-      margin-bottom: 10px;
-      border: 1px solid #d3965b;
-      border-radius: 3px;
-      background: #fff;
-      color: #3b2e2a;
-    }
+    #textControls input[type="text"],
     #textControls input[type="color"],
     #textControls input[type="range"],
     #textControls select {
@@ -271,7 +253,11 @@
       padding: 2px;
       margin-bottom: 10px;
     }
-    
+    #textControls input[type="text"] {
+      width: 80%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
     /* How To Buy Section */
     .how-to-buy {
       margin-bottom: 20px;
@@ -294,7 +280,6 @@
       margin-bottom: 10px;
       color: #3b2e2a;
     }
-    
     /* Memes Section */
     .meme-section {
       margin-bottom: 20px;
@@ -306,13 +291,11 @@
       color: #4e342e;
     }
     .meme-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
+      text-align: center;
     }
     .meme-item {
-      flex: 0 1 calc(50% - 10px);
+      display: inline-block;
+      margin: 10px;
       border: 1px solid #d3965b;
       border-radius: 10px;
       overflow: hidden;
@@ -321,11 +304,43 @@
     }
     .meme-item img,
     .meme-item video {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+    /* Video Container & Play Button Overlay */
+    .video-container {
+      position: relative;
+      display: inline-block;
+    }
+    .video-container video {
+      display: block;
       width: 100%;
       height: auto;
-      display: block;
     }
-    
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.6);
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+    }
+    .play-button::before {
+      content: "";
+      display: block;
+      border-left: 15px solid #fff;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+    }
     /* Chart Container */
     .chart-container {
       width: 100%;
@@ -341,7 +356,7 @@
       height: 500px;
       border: none;
     }
-    
+    /* Responsive adjustments for small devices */
     @media (max-width: 480px) {
       body {
         font-size: 16px;
@@ -350,7 +365,8 @@
         height: 300px;
       }
       .meme-item {
-        flex: 0 1 100%;
+        display: block;
+        margin: 10px auto;
       }
     }
   </style>
@@ -395,10 +411,10 @@
         <input type="file" id="uploadInput" accept="image/*" style="font-size:1em; color:#3b2e2a;">
       </div>
       <div class="photo-stage" id="photoStage">
-        <!-- Uploaded photo element; hidden until a photo is loaded -->
+        <!-- Uploaded photo; hidden until loaded -->
         <img id="uploadedPhoto" src="" alt="Uploaded Photo">
-        <!-- Time logo overlay -->
-        <img src="fine.png" alt="Time Overlay" id="dogOverlay">
+        <!-- Overlay image -->
+        <img src="fine.png" alt="Its Fine Dog Overlay" id="dogOverlay">
       </div>
       <div class="slider-container">
         <label for="sizeSlider">Logo Size:</label>
@@ -436,7 +452,7 @@
       <button id="resetLayoutBtn" class="save-btn" style="margin-top:10px;">Reset Positions</button>
     </div>
     
-    <!-- How to Buy Section -->
+    <!-- How To Buy Section -->
     <div class="how-to-buy">
       <h2>How to Buy</h2>
       <ol>
@@ -452,43 +468,38 @@
     <div class="meme-section">
       <h2>Memes</h2>
       <div class="meme-container">
-        <!-- Example Meme Image -->
+        <!-- Image Meme -->
         <div class="meme-item">
           <img src="meme1.jpeg" alt="Meme 1">
         </div>
-  <div class="meme-item">
-          <img src="meme2.jpeg" alt="Meme 1">
-        </div>
-        <!-- Example Video Meme (tap to play) -->
         <div class="meme-item">
-          <video 
-            width="100%" 
-            poster="VideoPoster1.jpg" 
-            preload="metadata" 
-            onclick="this.play()" 
-            playsinline
-          >
-            <source src="meme1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
+          <img src="meme2.jpeg" alt="Meme 2">
+        </div>
+        <!-- Video Meme with Custom Play Button -->
+        <div class="meme-item">
+          <div class="video-container">
+            <video id="memeVideo" poster="VideoPoster1.jpg" preload="none" playsinline>
+              <source src="meme1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="play-button" id="playButton"></div>
+          </div>
         </div>
       </div>
     </div>
     
     <!-- Chart Container -->
     <div class="chart-container">
-     <iframe 
-	width="100%" 
-	height="600" 
-	src="https://birdeye.so/tv-widget/8hAVBxKXmWCMUwwnfe3uvADbhdcmx4wfks3xzJfepump?chain=solana&viewMode=pair&chartInterval=15&chartType=Candle&chartTimezone=Europe%2FBerlin&chartLeftToolbar=hide&theme=light&cssCustomProperties=--tv-color-platform-background%3A%23fbd2a3&cssCustomProperties=--tv-color-pane-background%3A%23fbd2a3&chartOverrides=paneProperties.backgroundGradientEndColor%3Argba%28249%2C+230%2C+194%2C+1%29&chartOverrides=paneProperties.backgroundGradientStartColor%3Argba%28249%2C+230%2C+194%2C+1%29&chartOverrides=paneProperties.backgroundType%3Agradient" 
-	frameborder="0" 
-	allowfullscreen>
-</iframe>
+      <iframe 
+        src="https://birdeye.so/tv-widget/8hAVBxKXmWCMUwwnfe3uvADbhdcmx4wfks3xzJfepump?chain=solana&viewMode=pair&chartInterval=15&chartType=Candle&chartTimezone=Europe%2FBerlin&chartLeftToolbar=hide&theme=light&cssCustomProperties=--tv-color-platform-background%3A%23fbd2a3&cssCustomProperties=--tv-color-pane-background%3A%23fbd2a3&chartOverrides=paneProperties.backgroundGradientEndColor%3Argba%28249%2C+230%2C+194%2C+1%29&chartOverrides=paneProperties.backgroundGradientStartColor%3Argba%28249%2C+230%2C+194%2C+1%29&chartOverrides=paneProperties.backgroundType%3Agradient" 
+        frameborder="0" 
+        allowfullscreen>
+      </iframe>
     </div>
   </div>
 
   <script>
-    // Copy Contract Address to Clipboard
+    /* Copy Contract Address */
     function copyCA() {
       const caText = document.getElementById("caAddress").textContent.trim();
       navigator.clipboard.writeText(caText)
@@ -496,7 +507,7 @@
         .catch(err => console.error("Failed to copy text:", err));
     }
     
-    // Logo Overlay Functionality
+    /* Photo Editor Functionality */
     const uploadInput = document.getElementById('uploadInput');
     const photoStage = document.getElementById('photoStage');
     const uploadedPhoto = document.getElementById('uploadedPhoto');
@@ -521,7 +532,7 @@
       updateOverlayTransform();
     });
     
-    // Display uploaded photo
+    // Show uploaded photo
     uploadInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (!file) return;
@@ -533,7 +544,7 @@
       reader.readAsDataURL(file);
     });
     
-    // Dragging for logo overlay
+    // Drag overlay image (dogOverlay)
     let isDraggingLogo = false;
     let logoDragOffset = { x: 0, y: 0 };
     
@@ -559,7 +570,7 @@
     
     document.addEventListener('mouseup', () => { isDraggingLogo = false; });
     
-    // Touch support for logo dragging
+    // Touch support for overlay dragging
     dogOverlay.addEventListener('touchstart', (e) => {
       isDraggingLogo = true;
       const touch = e.touches[0];
@@ -584,7 +595,7 @@
     
     document.addEventListener('touchend', () => { isDraggingLogo = false; });
     
-    // --- Text Functionality ---
+    /* Text Functionality */
     const addTextBtn = document.getElementById('addTextBtn');
     const textControls = document.getElementById('textControls');
     const textInput = document.getElementById('textInput');
@@ -607,7 +618,6 @@
       photoStage.appendChild(newText);
       setActiveText(newText);
       
-      // Dragging for text element
       let isDraggingText = false;
       let textDragOffset = { x: 0, y: 0 };
       
@@ -634,7 +644,6 @@
       
       document.addEventListener('mouseup', () => { isDraggingText = false; });
       
-      // Touch support for text dragging
       newText.addEventListener('touchstart', (e) => {
         e.stopPropagation();
         setActiveText(newText);
@@ -704,7 +713,6 @@
       }
     });
     
-    // Helper: Convert rgb(...) to hex color
     function rgbToHex(rgb) {
       const rgbValues = rgb.match(/\d+/g);
       if (!rgbValues) return "#ffffff";
@@ -714,18 +722,13 @@
       }).join("");
     }
     
-    // Reset Layout: Re-center logo and text overlays within the photo stage
     function resetLayout() {
       const stageWidth = photoStage.offsetWidth;
       const stageHeight = photoStage.offsetHeight;
-      
-      // Center the logo overlay
       const logoWidth = dogOverlay.offsetWidth;
       const logoHeight = dogOverlay.offsetHeight;
       dogOverlay.style.left = (stageWidth - logoWidth) / 2 + "px";
       dogOverlay.style.top = (stageHeight - logoHeight) / 2 + "px";
-      
-      // Re-center each text overlay
       document.querySelectorAll('.draggable-text').forEach(textEl => {
         const textWidth = textEl.offsetWidth;
         const textHeight = textEl.offsetHeight;
@@ -736,7 +739,6 @@
     
     document.getElementById("resetLayoutBtn").addEventListener("click", resetLayout);
     
-    // Save Photo: draws uploaded photo, logo overlay (with rotation/scale), and all text overlays
     function savePhoto() {
       if (!uploadedPhoto.src || uploadedPhoto.style.display === 'none') {
         alert("Please upload a photo first.");
@@ -747,11 +749,10 @@
       canvas.width = stageRect.width;
       canvas.height = stageRect.height;
       const ctx = canvas.getContext('2d');
-      
-      // Draw uploaded photo as background
+      // Draw the uploaded photo as background
       ctx.drawImage(uploadedPhoto, 0, 0, canvas.width, canvas.height);
       
-      // Draw logo overlay with rotation and scale
+      // Draw the overlay image (dogOverlay)
       const overlayImg = new Image();
       overlayImg.crossOrigin = "Anonymous";
       overlayImg.src = dogOverlay.src;
@@ -760,19 +761,13 @@
         const logoBox = dogOverlay.getBoundingClientRect();
         const posX = logoBox.left - stageBox.left;
         const posY = logoBox.top - stageBox.top;
-        
         ctx.save();
-        // Translate to the center of the logo overlay
         ctx.translate(posX + logoBox.width/2, posY + logoBox.height/2);
-        // Rotate based on currentAngle (in radians)
         ctx.rotate(currentAngle * Math.PI / 180);
-        // Scale based on currentScale
         ctx.scale(currentScale, currentScale);
-        // Draw the overlay centered
         ctx.drawImage(overlayImg, -logoBox.width/2, -logoBox.height/2, logoBox.width, logoBox.height);
         ctx.restore();
-        
-        // Draw each text overlay
+        // Draw text overlays
         document.querySelectorAll('.draggable-text').forEach(textEl => {
           const style = window.getComputedStyle(textEl);
           const fontSize = style.fontSize;
@@ -784,7 +779,6 @@
           ctx.fillStyle = color;
           ctx.fillText(textEl.textContent, left, top + parseInt(fontSize));
         });
-        
         const dataURL = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = dataURL;
@@ -795,6 +789,25 @@
       };
       overlayImg.onerror = () => alert("Error loading the overlay image.");
     }
+    
+    /* Video Meme - Custom Play Button Logic */
+    const video = document.getElementById("memeVideo");
+    const playButton = document.getElementById("playButton");
+    
+    playButton.addEventListener("click", function() {
+      video.play();
+      playButton.style.opacity = "0";
+    });
+    
+    video.addEventListener("play", function() {
+      playButton.style.opacity = "0";
+    });
+    
+    video.addEventListener("pause", function() {
+      if (!video.ended) {
+        playButton.style.opacity = "1";
+      }
+    });
   </script>
 </body>
 </html>
