@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Ensure proper scaling on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Its Fine</title>
+  <!-- Google Fonts: using Share Tech Mono, Lobster and Orbitron -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Lobster&family=Orbitron&display=swap" 
+    rel="stylesheet"
+  >
+  <style>
+    /* Prevent horizontal scrolling to keep the site centered */
+    html, body {
+      overflow-x: hidden;
+    }
+    /* Global reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Share Tech Mono', monospace, Arial, sans-serif;
+      /* Warm, soft gradient background */
+      background: radial-gradient(circle at top, #f9e6c2, #f7d9b7 70%, #f5c99e 100%);
+      color: #3b2e2a;
+      font-size: 18px;
+      line-height: 1.5;
+      padding: 20px;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+    
+    .container {
+      max-width: 700px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: rgba(255,248,240,0.9);
+      border: 1px solid #d3965b;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(211,150,91,0.2);
+    }
+    
+    h1, p {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    /* Removed neon glow; kept the class name just for styling */
+    .neon-text {
+      color: #3b2e2a;
+      font-weight: bold;
+    }
+    
+    .subheading {
+      font-size: 1.2em;
+      color: #4e342e;
+      margin-top: -10px;
+      margin-bottom: 30px;
+    }
+    
+    .header-image {
+      width: 100%;
+      border: 1px solid #d3965b;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(211,150,91,0.2);
+    }
+    .header-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .socials {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    /* Give the icons a background color matching the dog’s golden-brown hue */
+    .socials a {
+      display: flex;
+      width: 50px;
+      height: 50px;
+      border: 1px solid #b98548;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: #f2be79; /* dog’s color */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      justify-content: center;
+      align-items: center;
+    }
+    .socials a:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 5px rgba(185,133,72,0.4);
+    }
+    /* Shrink the icons slightly so the background shows around them */
+    .socials img {
+      width: 80%;
+      height: 80%;
+      object-fit: contain;
+    }
+    
+    .ca-section {
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .ca-title {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      text-align: center;
+      color: #4e342e;
+    }
+    .ca-box {
+      background-color: #ffe9dc;
+      border: 1px solid #d3965b;
+      border-radius: 5px;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #3b2e2a;
+      text-align: center;
+      margin-bottom: 10px;
+      word-break: break-all;
+      box-shadow: 0 0 10px rgba(211,150,91,0.1);
+    }
+    .copy-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 10px;
+      width: 120px;
+      background-color: #ffe9dc;
+      color: #3b2e2a;
+      border: 1px solid #d3965b;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .copy-btn:hover {
+      background-color: #d3965b;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(211,150,91,0.4);
+    }
+    
+    /* Photo Editor Section */
+    .photo-editor-section {
+      margin-bottom: 20px;
+    }
+    .photo-editor-section h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 1.4em;
+      color: #4e342e;
+    }
+    .controls {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .photo-stage {
+      position: relative;
+      width: 100%;
+      border: 1px dashed #d3965b;
+      border-radius: 10px;
+      background-color: #ffe9dc;
+      margin-bottom: 15px;
+      touch-action: none;
+      box-shadow: 0 0 10px rgba(211,150,91,0.1);
+      min-height: 200px;
+      overflow: hidden;
+    }
+    #uploadedPhoto {
+      width: 100%;
+      height: auto;
+      display: none;
+    }
+    #dogOverlay {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 120px;
+      cursor: move;
+      user-select: none;
+      transition: transform 0.1s ease;
+    }
+    
+    /* Draggable Text Element */
+    .draggable-text {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #3b2e2a;
+      font-size: 24px;
+      font-family: 'Share Tech Mono', monospace;
+      cursor: move;
+      user-select: none;
+      padding: 5px;
+      background: rgba(255,248,240,0.3);
+      border: 1px dashed #d3965b;
+      border-radius: 5px;
+      transition: all 0.2s ease;
+    }
+    .draggable-text.active {
+      border-color: #b98548;
+      box-shadow: 0 0 5px rgba(185,133,72,0.5);
+    }
+    
+    .slider-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .slider-container label {
+      color: #3b2e2a;
+      font-size: 1em;
+    }
+    .save-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 10px 15px;
+      background-color: #ffe9dc;
+      border: 1px solid #d3965b;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #3b2e2a;
+      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .save-btn:hover {
+      background-color: #d3965b;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(211,150,91,0.4);
+    }
+    
+    /* Text Controls Panel */
+    #textControls {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #ffe9dc;
+      border: 1px solid #d3965b;
+      border-radius: 5px;
+      text-align: center;
+      display: none;
+    }
+    #textControls input[type="text"] {
+      width: 80%;
+      padding: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #d3965b;
+      border-radius: 3px;
+      background: #fff;
+      color: #3b2e2a;
+    }
+    #textControls input[type="color"],
+    #textControls input[type="range"],
+    #textControls select {
+      background: #fff;
+      color: #3b2e2a;
+      border: 1px solid #d3965b;
+      border-radius: 3px;
+      padding: 2px;
+      margin-bottom: 10px;
+    }
+    
+    /* How To Buy Section */
+    .how-to-buy {
+      margin-bottom: 20px;
+      padding: 20px;
+      background-color: rgba(255,248,240,0.8);
+      border: 1px solid #d3965b;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(211,150,91,0.1);
+    }
+    .how-to-buy h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 1.6em;
+      color: #4e342e;
+    }
+    .how-to-buy ol {
+      padding-left: 20px;
+    }
+    .how-to-buy li {
+      margin-bottom: 10px;
+      color: #3b2e2a;
+    }
+    
+    /* Memes Section */
+    .meme-section {
+      margin-bottom: 20px;
+    }
+    .meme-section h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 1.6em;
+      color: #4e342e;
+    }
+    .meme-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .meme-item {
+      flex: 0 1 calc(50% - 10px);
+      border: 1px solid #d3965b;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 5px rgba(211,150,91,0.3);
+      background-color: #fff;
+    }
+    .meme-item img,
+    .meme-item video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    /* Chart Container */
+    .chart-container {
+      width: 100%;
+      border: 1px solid #d3965b;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #ffe9dc;
+      box-shadow: 0 0 10px rgba(211,150,91,0.3);
+      margin-bottom: 20px;
+    }
+    .chart-container iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+    
+    @media (max-width: 480px) {
+      body {
+        font-size: 16px;
+      }
+      .chart-container iframe {
+        height: 300px;
+      }
+      .meme-item {
+        flex: 0 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Title & Intro -->
+    <h1 class="neon-text">IF</h1>
+    <p class="subheading">Its Fine</p>
+    
+    <!-- Header Image -->
+    <div class="header-image">
+      <img src="fine.jpeg" alt="Once upon a time...">
+    </div>
+    
+    <!-- Socials Section -->
+    <div class="socials">
+      <a href="https://t.me/itisfineCTO" target="_blank" rel="noopener noreferrer">
+        <img src="telegram.jpeg" alt="Telegram">
+      </a>
+      <a href="https://dexscreener.com/solana/68xFzEtsBgPHRXhFUg1bH7SrC4GVRJPYtHhKE7s5hDs1" target="_blank" rel="noopener noreferrer">
+        <img src="dex.jpeg" alt="Dexscreener">
+      </a>
+      <a href="https://pump.fun/coin/8hAVBxKXmWCMUwwnfe3uvADbhdcmx4wfks3xzJfepump" target="_blank" rel="noopener noreferrer">
+        <img src="Pumpfun.jpeg" alt="PumpFun">
+      </a>
+    </div>
+    
+    <!-- Contract Address Section -->
+    <div class="ca-section">
+      <div class="ca-title">Contract Address:</div>
+      <div class="ca-box" id="caAddress">
+        8hAVBxKXmWCMUwwnfe3uvADbhdcmx4wfks3xzJfepump
+      </div>
+      <button class="copy-btn" onclick="copyCA()">Copy</button>
+    </div>
+    
+    <!-- Photo Editor Section -->
+    <div class="photo-editor-section">
+      <h2>Add the "Its fine dog" to Your Photo</h2>
+      <div class="controls">
+        <input type="file" id="uploadInput" accept="image/*" style="font-size:1em; color:#3b2e2a;">
+      </div>
+      <div class="photo-stage" id="photoStage">
+        <!-- Uploaded photo element; hidden until a photo is loaded -->
+        <img id="uploadedPhoto" src="" alt="Uploaded Photo">
+        <!-- Time logo overlay -->
+        <img src="fine.png" alt="Time Overlay" id="dogOverlay">
+      </div>
+      <div class="slider-container">
+        <label for="sizeSlider">Logo Size:</label>
+        <input type="range" id="sizeSlider" min="0.5" max="2" step="0.1" value="1">
+      </div>
+      <div class="slider-container" id="angleContainer">
+        <label for="angleSlider">Logo Angle:</label>
+        <input type="range" id="angleSlider" min="-180" max="180" step="1" value="0">
+      </div>
+      <button class="save-btn" onclick="savePhoto()">Save Photo</button>
+      
+      <!-- Text Functionality -->
+      <button id="addTextBtn" class="save-btn" style="margin-top:10px;">Add Text</button>
+      <div id="textControls">
+        <input type="text" id="textInput" placeholder="Enter your text">
+        <div class="slider-container">
+          <label for="textSizeSlider">Text Size:</label>
+          <input type="range" id="textSizeSlider" min="10" max="100" value="24">
+        </div>
+        <div class="slider-container">
+          <label for="textColorPicker">Text Color:</label>
+          <input type="color" id="textColorPicker" value="#ffffff">
+        </div>
+        <div class="slider-container">
+          <label for="fontStyleSelect">Font Style:</label>
+          <select id="fontStyleSelect">
+            <option value="'Share Tech Mono', monospace">Mono</option>
+            <option value="'Lobster', cursive">Lobster</option>
+            <option value="'Orbitron', sans-serif">Orbitron</option>
+          </select>
+        </div>
+        <button id="deleteTextBtn" class="copy-btn" style="margin-top:10px;">Delete Text</button>
+      </div>
+      
+      <button id="resetLayoutBtn" class="save-btn" style="margin-top:10px;">Reset Positions</button>
+    </div>
+    
+    <!-- How to Buy Section -->
+    <div class="how-to-buy">
+      <h2>How to Buy</h2>
+      <ol>
+        <li>Set up a Solana-compatible wallet (e.g., Phantom) and fund it with SOL.</li>
+        <li>Visit a DEX (e.g., Jupiter or Raydium) and connect your wallet.</li>
+        <li>Use the contract address above to locate $IF.</li>
+        <li>Swap your SOL for $IF tokens.</li>
+        <li>Confirm the transaction and enjoy your <br>Its Fine!</li>
+      </ol>
+    </div>
+    
+    <!-- Memes Section -->
+    <div class="meme-section">
+      <h2>Memes</h2>
+      <div class="meme-container">
+        <!-- Example Meme Image -->
+        <div class="meme-item">
+          <img src="meme1.jpeg" alt="Meme 1">
+        </div>
+  <div class="meme-item">
+          <img src="meme2.jpeg" alt="Meme 1">
+        </div>
+        <!-- Example Video Meme (tap to play) -->
+        <div class="meme-item">
+          <video 
+            width="100%" 
+            poster="VideoPoster1.jpg" 
+            preload="metadata" 
+            onclick="this.play()" 
+            playsinline
+          >
+            <source src="meme1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Chart Container -->
+    <div class="chart-container">
+     <iframe 
+	width="100%" 
+	height="600" 
+	src="https://birdeye.so/tv-widget/8hAVBxKXmWCMUwwnfe3uvADbhdcmx4wfks3xzJfepump?chain=solana&viewMode=pair&chartInterval=15&chartType=Candle&chartTimezone=Europe%2FBerlin&chartLeftToolbar=hide&theme=light&cssCustomProperties=--tv-color-platform-background%3A%23fbd2a3&cssCustomProperties=--tv-color-pane-background%3A%23fbd2a3&chartOverrides=paneProperties.backgroundGradientEndColor%3Argba%28249%2C+230%2C+194%2C+1%29&chartOverrides=paneProperties.backgroundGradientStartColor%3Argba%28249%2C+230%2C+194%2C+1%29&chartOverrides=paneProperties.backgroundType%3Agradient" 
+	frameborder="0" 
+	allowfullscreen>
+</iframe>
+    </div>
+  </div>
+
+  <script>
+    // Copy Contract Address to Clipboard
+    function copyCA() {
+      const caText = document.getElementById("caAddress").textContent.trim();
+      navigator.clipboard.writeText(caText)
+        .then(() => alert("Contract Address copied!"))
+        .catch(err => console.error("Failed to copy text:", err));
+    }
+    
+    // Logo Overlay Functionality
+    const uploadInput = document.getElementById('uploadInput');
+    const photoStage = document.getElementById('photoStage');
+    const uploadedPhoto = document.getElementById('uploadedPhoto');
+    const dogOverlay = document.getElementById('dogOverlay');
+    const sizeSlider = document.getElementById('sizeSlider');
+    const angleSlider = document.getElementById('angleSlider');
+    
+    let currentScale = 1;
+    let currentAngle = 0;
+    
+    function updateOverlayTransform() {
+      dogOverlay.style.transform = `scale(${currentScale}) rotate(${currentAngle}deg)`;
+    }
+    
+    sizeSlider.addEventListener('input', () => {
+      currentScale = sizeSlider.value;
+      updateOverlayTransform();
+    });
+    
+    angleSlider.addEventListener('input', () => {
+      currentAngle = angleSlider.value;
+      updateOverlayTransform();
+    });
+    
+    // Display uploaded photo
+    uploadInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        uploadedPhoto.src = event.target.result;
+        uploadedPhoto.style.display = 'block';
+      }
+      reader.readAsDataURL(file);
+    });
+    
+    // Dragging for logo overlay
+    let isDraggingLogo = false;
+    let logoDragOffset = { x: 0, y: 0 };
+    
+    dogOverlay.addEventListener('mousedown', (e) => {
+      isDraggingLogo = true;
+      const overlayRect = dogOverlay.getBoundingClientRect();
+      logoDragOffset.x = e.clientX - overlayRect.left;
+      logoDragOffset.y = e.clientY - overlayRect.top;
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+      if (!isDraggingLogo) return;
+      e.preventDefault();
+      const stageRect = photoStage.getBoundingClientRect();
+      const overlayRect = dogOverlay.getBoundingClientRect();
+      let newLeft = e.clientX - stageRect.left - logoDragOffset.x;
+      let newTop = e.clientY - stageRect.top - logoDragOffset.y;
+      newLeft = Math.max(0, Math.min(newLeft, stageRect.width - overlayRect.width));
+      newTop = Math.max(0, Math.min(newTop, stageRect.height - overlayRect.height));
+      dogOverlay.style.left = newLeft + 'px';
+      dogOverlay.style.top = newTop + 'px';
+    });
+    
+    document.addEventListener('mouseup', () => { isDraggingLogo = false; });
+    
+    // Touch support for logo dragging
+    dogOverlay.addEventListener('touchstart', (e) => {
+      isDraggingLogo = true;
+      const touch = e.touches[0];
+      const overlayRect = dogOverlay.getBoundingClientRect();
+      logoDragOffset.x = touch.clientX - overlayRect.left;
+      logoDragOffset.y = touch.clientY - overlayRect.top;
+    });
+    
+    document.addEventListener('touchmove', (e) => {
+      if (!isDraggingLogo) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      const stageRect = photoStage.getBoundingClientRect();
+      const overlayRect = dogOverlay.getBoundingClientRect();
+      let newLeft = touch.clientX - stageRect.left - logoDragOffset.x;
+      let newTop = touch.clientY - stageRect.top - logoDragOffset.y;
+      newLeft = Math.max(0, Math.min(newLeft, stageRect.width - overlayRect.width));
+      newTop = Math.max(0, Math.min(newTop, stageRect.height - overlayRect.height));
+      dogOverlay.style.left = newLeft + 'px';
+      dogOverlay.style.top = newTop + 'px';
+    }, { passive: false });
+    
+    document.addEventListener('touchend', () => { isDraggingLogo = false; });
+    
+    // --- Text Functionality ---
+    const addTextBtn = document.getElementById('addTextBtn');
+    const textControls = document.getElementById('textControls');
+    const textInput = document.getElementById('textInput');
+    const textSizeSlider = document.getElementById('textSizeSlider');
+    const textColorPicker = document.getElementById('textColorPicker');
+    const fontStyleSelect = document.getElementById('fontStyleSelect');
+    const deleteTextBtn = document.getElementById('deleteTextBtn');
+    
+    let activeTextElement = null;
+    
+    addTextBtn.addEventListener('click', () => {
+      const newText = document.createElement('div');
+      newText.classList.add('draggable-text');
+      newText.textContent = "New Text";
+      newText.style.fontSize = textSizeSlider.value + 'px';
+      newText.style.color = textColorPicker.value;
+      newText.style.fontFamily = fontStyleSelect.value;
+      newText.style.left = '20px';
+      newText.style.top = '20px';
+      photoStage.appendChild(newText);
+      setActiveText(newText);
+      
+      // Dragging for text element
+      let isDraggingText = false;
+      let textDragOffset = { x: 0, y: 0 };
+      
+      newText.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+        setActiveText(newText);
+        isDraggingText = true;
+        const rect = newText.getBoundingClientRect();
+        textDragOffset.x = e.clientX - rect.left;
+        textDragOffset.y = e.clientY - rect.top;
+      });
+      
+      document.addEventListener('mousemove', (e) => {
+        if (!isDraggingText) return;
+        e.preventDefault();
+        const stageRect = photoStage.getBoundingClientRect();
+        let newLeft = e.clientX - stageRect.left - textDragOffset.x;
+        let newTop = e.clientY - stageRect.top - textDragOffset.y;
+        newLeft = Math.max(0, Math.min(newLeft, stageRect.width - newText.offsetWidth));
+        newTop = Math.max(0, Math.min(newTop, stageRect.height - newText.offsetHeight));
+        newText.style.left = newLeft + 'px';
+        newText.style.top = newTop + 'px';
+      });
+      
+      document.addEventListener('mouseup', () => { isDraggingText = false; });
+      
+      // Touch support for text dragging
+      newText.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+        setActiveText(newText);
+        isDraggingText = true;
+        const touch = e.touches[0];
+        const rect = newText.getBoundingClientRect();
+        textDragOffset.x = touch.clientX - rect.left;
+        textDragOffset.y = touch.clientY - rect.top;
+      });
+      
+      document.addEventListener('touchmove', (e) => {
+        if (!isDraggingText) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const stageRect = photoStage.getBoundingClientRect();
+        let newLeft = touch.clientX - stageRect.left - textDragOffset.x;
+        let newTop = touch.clientY - stageRect.top - textDragOffset.y;
+        newLeft = Math.max(0, Math.min(newLeft, stageRect.width - newText.offsetWidth));
+        newTop = Math.max(0, Math.min(newTop, stageRect.height - newText.offsetHeight));
+        newText.style.left = newLeft + 'px';
+        newText.style.top = newTop + 'px';
+      }, { passive: false });
+      
+      document.addEventListener('touchend', () => { isDraggingText = false; });
+    });
+    
+    function setActiveText(element) {
+      document.querySelectorAll('.draggable-text').forEach(el => el.classList.remove('active'));
+      activeTextElement = element;
+      activeTextElement.classList.add('active');
+      textControls.style.display = 'block';
+      textInput.value = activeTextElement.textContent;
+      textSizeSlider.value = parseInt(window.getComputedStyle(activeTextElement).fontSize);
+      textColorPicker.value = rgbToHex(window.getComputedStyle(activeTextElement).color);
+      fontStyleSelect.value = activeTextElement.style.fontFamily || "'Share Tech Mono', monospace";
+    }
+    
+    textInput.addEventListener('input', () => {
+      if (activeTextElement) {
+        activeTextElement.textContent = textInput.value;
+      }
+    });
+    
+    textSizeSlider.addEventListener('input', () => {
+      if (activeTextElement) {
+        activeTextElement.style.fontSize = textSizeSlider.value + 'px';
+      }
+    });
+    
+    textColorPicker.addEventListener('input', () => {
+      if (activeTextElement) {
+        activeTextElement.style.color = textColorPicker.value;
+      }
+    });
+    
+    fontStyleSelect.addEventListener('change', () => {
+      if (activeTextElement) {
+        activeTextElement.style.fontFamily = fontStyleSelect.value;
+      }
+    });
+    
+    deleteTextBtn.addEventListener('click', () => {
+      if (activeTextElement) {
+        activeTextElement.remove();
+        activeTextElement = null;
+        textControls.style.display = 'none';
+      }
+    });
+    
+    // Helper: Convert rgb(...) to hex color
+    function rgbToHex(rgb) {
+      const rgbValues = rgb.match(/\d+/g);
+      if (!rgbValues) return "#ffffff";
+      return "#" + rgbValues.slice(0,3).map(x => {
+        const hex = parseInt(x).toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+      }).join("");
+    }
+    
+    // Reset Layout: Re-center logo and text overlays within the photo stage
+    function resetLayout() {
+      const stageWidth = photoStage.offsetWidth;
+      const stageHeight = photoStage.offsetHeight;
+      
+      // Center the logo overlay
+      const logoWidth = dogOverlay.offsetWidth;
+      const logoHeight = dogOverlay.offsetHeight;
+      dogOverlay.style.left = (stageWidth - logoWidth) / 2 + "px";
+      dogOverlay.style.top = (stageHeight - logoHeight) / 2 + "px";
+      
+      // Re-center each text overlay
+      document.querySelectorAll('.draggable-text').forEach(textEl => {
+        const textWidth = textEl.offsetWidth;
+        const textHeight = textEl.offsetHeight;
+        textEl.style.left = (stageWidth - textWidth) / 2 + "px";
+        textEl.style.top = (stageHeight - textHeight) / 2 + "px";
+      });
+    }
+    
+    document.getElementById("resetLayoutBtn").addEventListener("click", resetLayout);
+    
+    // Save Photo: draws uploaded photo, logo overlay (with rotation/scale), and all text overlays
+    function savePhoto() {
+      if (!uploadedPhoto.src || uploadedPhoto.style.display === 'none') {
+        alert("Please upload a photo first.");
+        return;
+      }
+      const stageRect = photoStage.getBoundingClientRect();
+      const canvas = document.createElement('canvas');
+      canvas.width = stageRect.width;
+      canvas.height = stageRect.height;
+      const ctx = canvas.getContext('2d');
+      
+      // Draw uploaded photo as background
+      ctx.drawImage(uploadedPhoto, 0, 0, canvas.width, canvas.height);
+      
+      // Draw logo overlay with rotation and scale
+      const overlayImg = new Image();
+      overlayImg.crossOrigin = "Anonymous";
+      overlayImg.src = dogOverlay.src;
+      overlayImg.onload = () => {
+        const stageBox = photoStage.getBoundingClientRect();
+        const logoBox = dogOverlay.getBoundingClientRect();
+        const posX = logoBox.left - stageBox.left;
+        const posY = logoBox.top - stageBox.top;
+        
+        ctx.save();
+        // Translate to the center of the logo overlay
+        ctx.translate(posX + logoBox.width/2, posY + logoBox.height/2);
+        // Rotate based on currentAngle (in radians)
+        ctx.rotate(currentAngle * Math.PI / 180);
+        // Scale based on currentScale
+        ctx.scale(currentScale, currentScale);
+        // Draw the overlay centered
+        ctx.drawImage(overlayImg, -logoBox.width/2, -logoBox.height/2, logoBox.width, logoBox.height);
+        ctx.restore();
+        
+        // Draw each text overlay
+        document.querySelectorAll('.draggable-text').forEach(textEl => {
+          const style = window.getComputedStyle(textEl);
+          const fontSize = style.fontSize;
+          const fontFamily = style.fontFamily;
+          const color = style.color;
+          const left = textEl.offsetLeft;
+          const top = textEl.offsetTop;
+          ctx.font = `${fontSize} ${fontFamily}`;
+          ctx.fillStyle = color;
+          ctx.fillText(textEl.textContent, left, top + parseInt(fontSize));
+        });
+        
+        const dataURL = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'timeComposite.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+      overlayImg.onerror = () => alert("Error loading the overlay image.");
+    }
+  </script>
+</body>
+</html>
